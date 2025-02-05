@@ -1,5 +1,11 @@
-from src import get_config
+from asyncio import run as async_run
 
-config = get_config()
+from src import bot, dispatcher
 
-print(config["Bot"]["token"])
+
+async def main() -> None:
+    await dispatcher.start_polling(bot)
+
+
+if __name__ == "__main__":
+    async_run(main())

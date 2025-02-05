@@ -2,8 +2,8 @@ from os.path import exists
 
 from configparser import ConfigParser
 
-__CONFIG_FILE_CONTENT = """[Bot]
-token=""
+__CONFIG_FILE_CONTENT = """[Tech]
+token=0
 """
 
 CONFIG_FILENAME = "config.ini"
