@@ -1,5 +1,3 @@
-# from src import config
+from src import config
 
-# print(config["Bot"]["token"])
-
-print("test")
+print(config["Bot"]["token"])
