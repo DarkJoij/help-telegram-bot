@@ -1,0 +1,11 @@
+version: "3"
+tasks:
+  run:
+    desc: "Start"
+    cmd:
+      python3 main.py
+
+  test:
+    desc: "Test"
+    cmd: 
+      echo test

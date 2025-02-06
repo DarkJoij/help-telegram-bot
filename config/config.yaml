@@ -1,0 +1,10 @@
+storage:
+    host: ""
+    port: ""
+    database: ""
+    password: ""
+    username: ""
+    uri: "postgresql://%s:%s@%s:%s/%s" # user/pwd/host/port/db
+
+app:
+  bot_token: ""
