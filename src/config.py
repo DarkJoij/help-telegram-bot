@@ -1,22 +1,47 @@
-from os.path import exists
+import yaml
+import logging
+from yaml import load
 
-from configparser import ConfigParser
+# init_logger - functions that creates logger object and return it
+def init_logger() -> logging.Logger:
+    logger = logging.getLogger(__name__)
 
-__CONFIG_FILE_CONTENT = """[Tech]
-token=0
-"""
+    # console_handler is object to write logs in console
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(
+        logging.Formatter('%(asctime)s\t %(levelname)s \t %(message)s'))
 
-CONFIG_FILENAME = "config.ini"
+    # loggers config
+    logger.setLevel(logging.INFO)
+    logger.addHandler(console_handler)
 
-config = ConfigParser()
+    logger.info("Logger initialized successfully")
+    return logger
 
 
-def get_config() -> ConfigParser:
-    if not exists(CONFIG_FILENAME):
-        with open(CONFIG_FILENAME, "w") as config_file:
-            config_file.write(__CONFIG_FILE_CONTENT)
+#  Config - class that parse config files
+class Config:
+    def __init__(self, logger):
+        self.logger = logger
+        self.config = {
+            "app": {
+                "bot_token": "None",        # sets default
+                "admin_id": "None"
+            }
+        }
+        
+    def load_config(self, config_filename: str) -> None:
+        try:
+            with open(f'./config/{config_filename}', 'r') as cfg_f:
+                config = load(cfg_f, Loader = yaml.FullLoader)
+                self.config = config
+                self.logger.info(f'Config successfully loaded. Data: {self.config}')
 
-        raise Exception("Enter the token into \"config.ini\" file.")
+        except FileNotFoundError:
+            self.logger.error("Config file not found")
 
-    config.read(CONFIG_FILENAME)
-    return config
+
+
+
+
+
