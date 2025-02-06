@@ -2,7 +2,7 @@ import yaml
 import logging
 from yaml import load
 
-# init_logger - functions that creates logger object and return it
+# init_logger - function that creates logger object 
 def init_logger() -> logging.Logger:
     logger = logging.getLogger(__name__)
 
@@ -19,13 +19,13 @@ def init_logger() -> logging.Logger:
     return logger
 
 
-#  Config - class that parse config files
+#  Config - class that parses config files
 class Config:
     def __init__(self, logger):
         self.logger = logger
         self.config = {
             "app": {
-                "bot_token": "None",        # sets default
+                "bot_token": "None",        # set default
                 "admin_id": "None"
             }
         }
