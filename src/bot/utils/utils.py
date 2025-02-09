@@ -3,12 +3,6 @@ from aiogram.types import (InlineKeyboardButton,
                            KeyboardButton,
                            ReplyKeyboardMarkup, ReplyKeyboardRemove)
 
-'''
-    Храни тут примеры менюшек бота, подсасывай их в самого бота, 
-    думаю архитектурно верно это будет 
-
-'''
-
 menu = [
     [InlineKeyboardButton(text="📝 Генерировать текст", callback_data="generate_text"),
      InlineKeyboardButton(text="🖼 Генерировать изображение", callback_data="generate_image")],

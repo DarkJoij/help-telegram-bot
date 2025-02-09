@@ -1,7 +1,6 @@
 import asyncio
 
-from src.bot.bot import TelegramBot
-from src.config import Config, init_logger
+from src import Config, init_logger, TelegramBot
 
 
 async def main():
