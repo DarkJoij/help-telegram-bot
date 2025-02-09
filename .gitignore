@@ -1,6 +1,7 @@
 *__pycache__
+
 /venv
-/config.ini
-.DS_Store
+/config
+
 .idea
 .venv

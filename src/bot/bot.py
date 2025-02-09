@@ -1,25 +1,25 @@
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, html
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
+from aiogram.types import Message
 
 
-class Telegram_Bot:
+class TelegramBot:
     def __init__(self, config, logger):
         self.config = config
         self.logger = logger
         self.dispatcher = Dispatcher()
-        self.__bot = Bot(token = self.config['app']['bot_token'])
+        self.__bot = Bot(
+            token=self.config['tech']['bot_token'],
+            default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+        )
 
-
-    def handlers(self):          # !FIXME бля, я не знаю пока как вынести хендлеры
-                                 # !FIXME проблема в декораторах
-                                 # !FIXME в целом можешь костылить и писать методы прям в классе
-
+    def handlers(self) -> None:
         @self.dispatcher.message(CommandStart())
-        async def test_handler(message: types.Message):
-            await message.answer('test')
+        async def start_command_handler(message: Message) -> None:
+            await message.answer(f"Hello, {html.bold(message.from_user.full_name)}!")
 
-
-    # Start ur bot
     async def run(self):
-        self.logger.info("Bot starts his work")
+        self.logger.info("Bot starts his work.")
         await self.dispatcher.start_polling(self.__bot, skip_updates=True)

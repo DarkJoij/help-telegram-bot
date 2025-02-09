@@ -1,17 +1,15 @@
-import yaml
 import logging
-from yaml import load
 
-# init_logger - function that creates logger object 
+from yaml import CDumper, CLoader, dump, load
+
+
 def init_logger() -> logging.Logger:
     logger = logging.getLogger(__name__)
 
-    # console_handler is object to write logs in console
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(
-        logging.Formatter('%(asctime)s\t %(levelname)s \t %(message)s'))
+        logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 
-    # loggers config
     logger.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
@@ -19,29 +17,26 @@ def init_logger() -> logging.Logger:
     return logger
 
 
-#  Config - class that parses config files
 class Config:
     def __init__(self, logger):
         self.logger = logger
         self.config = {
-            "app": {
-                "bot_token": "None",        # set default
-                "admin_id": "None"
+            "tech": {
+                "bot_token": "0",
+                "admin_id": "0"
             }
         }
         
     def load_config(self, config_filename: str) -> None:
+        config_file_path = f'./config/{config_filename}'
+
         try:
-            with open(f'./config/{config_filename}', 'r') as cfg_f:
-                config = load(cfg_f, Loader = yaml.FullLoader)
+            with open(config_file_path, 'r') as config_file:
+                config = load(config_file, Loader=CLoader)
                 self.config = config
                 self.logger.info(f'Config successfully loaded. Data: {self.config}')
-
         except FileNotFoundError:
-            self.logger.error("Config file not found")
+            with open(config_file_path, "w") as config_file:
+                config_file.write(dump(self.config, Dumper=CDumper))
 
-
-
-
-
-
+            raise Exception("Enter the token into config file.")
