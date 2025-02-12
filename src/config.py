@@ -13,12 +13,12 @@ def init_logger() -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
-    logger.info("Logger initialized successfully")
+    logger.info("Logger initialized successfully.")
     return logger
 
 
 class Config:
-    def __init__(self, logger):
+    def __init__(self, logger) -> None:
         self.logger = logger
         self.config = {
             "tech": {
@@ -38,5 +38,6 @@ class Config:
         except FileNotFoundError:
             with open(config_file_path, "w") as config_file:
                 config_file.write(dump(self.config, Dumper=CDumper))
+                self.logger.info('Created new config file.')
 
             raise Exception("Enter the token into config file.")
